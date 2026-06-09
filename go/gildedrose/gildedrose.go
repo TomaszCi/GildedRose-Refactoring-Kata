@@ -147,25 +147,23 @@ func UpdateQuality(items []*Item) {
 	// 	}
 	// }
 
-	typedItems := make([]QualityCalculator, len(items))
 	for i, v := range items {
+		var typedItem QualityCalculator
 		switch v.Name {
 		case "Aged Brie":
-			typedItems[i] = &BrieCheese{}
+			typedItem = &BrieCheese{}
 		case "Backstage passes to a TAFKAL80ETC concert":
-			typedItems[i] = &BackstagePass{}
+			typedItem = &BackstagePass{}
 		case "Sulfuras, Hand of Ragnaros":
-			typedItems[i] = &Legendary{}
+			typedItem = &Legendary{}
 		case "Conjured Mana Cake":
-			typedItems[i] = &Conjured{}
+			typedItem = &Conjured{}
 		default:
-			typedItems[i] = &Ordinary{}
+			typedItem = &Ordinary{}
 		}
-	}
 
-	for i := 0; i < len(items); i++ {
 		items[i].SellIn--
-		items[i].Quality = typedItems[i].CalculateQuality(items[i].SellIn, items[i].Quality)
+		items[i].Quality = typedItem.CalculateQuality(items[i].SellIn, items[i].Quality)
 	}
 
 }
